@@ -29,7 +29,7 @@ def get_search_results(search: str, num: int):
     num_fetched = len(x)
     print(f"Fetched {num_fetched} videos")
 
-    result = [x[i]["videoId"] for i in range(num_fetched)]
+    result = [x[i]["videoId"] for i in range(min(num, num_fetched))]
 
     return result
 
@@ -57,7 +57,7 @@ def save_video(id: str, dir: str):
 
     # folder = os.path(dir)
     name = title + ".mp4"
-    path = os.path.join(dir, title)
+    path = os.path.join(dir, name)
 
     if not os.path.exists(dir):
         print(f"{dir} does not exist.")
