@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 gutenberg_novels.py
 Search and download public-domain novels from Project Gutenberg via Gutendex.
@@ -243,6 +242,11 @@ def main():
        print(text[:10000])
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> db090b3 (Rename project)
 def get_epub_text(epub_path):
     if not epub_path:
         return ""
@@ -270,6 +274,7 @@ def get_epub_text(epub_path):
             continue
     return "\n".join(text_content)
 
+<<<<<<< HEAD
 # --- NEW FUNCTION FOR UI ---
 
 def get_all_downloaded_books_text() -> str:
@@ -323,6 +328,5 @@ def get_all_downloaded_books_text() -> str:
     return "".join(all_books_text)
 
 # --- END OF NEW FUNCTION ---
-
 if __name__ == "__main__":
     main()

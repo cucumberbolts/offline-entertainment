@@ -1,4 +1,3 @@
-# travel_articles.py
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
@@ -76,6 +75,11 @@ def fetch_articles(search_term: str) -> str:
         soup = BeautifulSoup(r.text, "html.parser")
     except requests.RequestException as e:
         return f"Error: Could not connect to BBC Travel. {e}"
+if __name__ == "__main__":
+    homepage = "https://www.bbc.com/travel"
+    r = requests.get(homepage, headers=HEADERS, timeout=15)
+    r.raise_for_status()
+    soup = BeautifulSoup(r.text, "html.parser")
 
     # collect candidate links from the Travel homepage
     anchors = soup.select('a[href^="/travel/"], a[href^="/news/stories/"]')
@@ -142,3 +146,34 @@ if __name__ == "__main__":
     print("--- Scraping... ---")
     articles_text = fetch_articles(term)
     print(articles_text)
+        if len(pagelinks) >= 30:
+            break
+
+    search_terms = []
+    add = input("Enter search terms (comma-separated) or leave blank to get all articles: ")
+    search_terms.append(add)
+    for link in pagelinks:
+        try:
+            # fetch the candidate page and decide if it's an article (not a listing)
+            r2 = requests.get(link, headers=HEADERS, timeout=12)
+            r2.raise_for_status()
+        except requests.RequestException:
+            continue
+
+        if not _is_article_html(r2.text):
+            # likely a category/listing page — skip
+            continue
+
+        text = get_article_text(link)
+        if not text or len(text) < 300:
+            # still too short to be a full article
+            continue
+        str_link = str(link)
+        # optional: filter by search terms
+        for term in search_terms:
+            if term.lower() in text.lower() and "cultural-experiences" not in str_link and "worlds-table" not in str_link and "/destinations/" not in str_link:
+                print("URL:", link)
+                print("Length:", len(text))
+                print(text[:1000])
+                print("\n" + "=" * 80 + "\n")
+                break
