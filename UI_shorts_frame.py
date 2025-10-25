@@ -1,0 +1,278 @@
+import tkinter as tk
+from tkinter import Canvas, Entry, Text, Button
+
+class App:
+    def __init__(self, root):
+        self.root = root
+        # Set window dimensions to match the Figma frame
+        self.root.geometry("1440x900") 
+        self.root.configure(bg="#FFFFFF") # Main background is white
+        
+        # --- Sidebar (Dark) ---
+        self.sidebar_canvas = Canvas(
+            self.root,
+            bg="#212121", # Dark sidebar background
+            height=900,
+            width=260, # Adjusted width based on image
+            bd=0,
+            highlightthickness=0,
+            relief="ridge"
+        )
+        self.sidebar_canvas.place(x=0, y=0)
+
+        # --- "App Name" Text ---
+        self.sidebar_canvas.create_text(
+            30.0, 30.0, # Adjust coordinates
+            anchor="nw",
+            text="App Name",
+            fill="#FFFFFF", # White text
+            font=("Inter", 24 * -1) # Adjust font and size
+        )
+
+        # --- "Home" Button (Selected State) ---
+        self.button_home = Button(
+            self.sidebar_canvas, # Place button on the dark canvas
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: print("Home button clicked"),
+            relief="flat",
+            text="Home",
+            fg="#212121",  # Black text
+            bg="#FFFFFF",  # White background (selected)
+            font=("Inter", 16 * -1),
+            anchor="w",
+            padx=30
+        )
+        self.button_home.place(
+            x=0, y=100, # Adjust coordinates
+            width=260, # Full width of sidebar
+            height=50
+        )
+        
+        # --- "Downloads" Text (Category Label) ---
+        self.sidebar_canvas.create_text(
+            30.0, 180.0, # Adjust coordinates
+            anchor="nw",
+            text="Downloads",
+            fill="#A0A0A0", # Grey text
+            font=("Inter", 16 * -1)
+        )
+
+        # --- "Videos" Button (Unselected) ---
+        self.button_videos = Button(
+            self.sidebar_canvas,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: print("Videos button clicked"),
+            relief="flat",
+            text="▸ Videos",
+            fg="#FFFFFF",  # White text
+            bg="#212121",  # Dark background (unselected)
+            activebackground="#333333",
+            activeforeground="#FFFFFF",
+            font=("Inter", 16 * -1),
+            anchor="w",
+            padx=30
+        )
+        self.button_videos.place(x=0, y=230, width=260, height=50) # Adjust
+
+        # --- "Music" Button (Unselected) ---
+        self.button_music = Button(
+            self.sidebar_canvas,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: print("Music button clicked"),
+            relief="flat",
+            text="🎵 Music",
+            fg="#FFFFFF",
+            bg="#212121",
+            activebackground="#333333",
+            activeforeground="#FFFFFF",
+            font=("Inter", 16 * -1),
+            anchor="w",
+            padx=30
+        )
+        self.button_music.place(x=0, y=280, width=260, height=50) # Adjust
+
+        # --- "Books" Button (Unselected) ---
+        self.button_books = Button(
+            self.sidebar_canvas,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: print("Books button clicked"),
+            relief="flat",
+            text="📚 Books",
+            fg="#FFFFFF",
+            bg="#212121",
+            activebackground="#333333",
+            activeforeground="#FFFFFF",
+            font=("Inter", 16 * -1),
+            anchor="w",
+            padx=30
+        )
+        self.button_books.place(x=0, y=330, width=260, height=50) # Adjust
+        
+        
+        # --- Main Content Area (White) ---
+        # This canvas will hold the static elements of the main area
+        self.main_canvas = Canvas(
+            self.root,
+            bg="#FFFFFF",
+            height=900,
+            width=1180, # 1440 - 260
+            bd=0,
+            highlightthickness=0,
+            relief="ridge"
+        )
+        self.main_canvas.place(x=260, y=0)
+
+
+        # --- "Home" Tab Button (Selected) ---
+        self.button_tab_home = Button(
+            self.main_canvas,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: print("Home tab clicked"),
+            relief="flat",
+            text="Home",
+            fg="#212121",  # Black text (selected)
+            bg="#FFFFFF",
+            font=("Inter", 16 * -1)
+        )
+        self.button_tab_home.place(x=50, y=30, width=80, height=40) # Adjust
+
+        # --- Underline for "Home" Tab ---
+        self.main_canvas.create_rectangle(
+            50.0, 70.0, 130.0, 73.0, # Adjust coordinates
+            fill="#0D63F7", # Blue color
+            outline=""
+        )
+
+        # --- "New" Tab Button (Unselected) ---
+        self.button_tab_new = Button(
+            self.main_canvas,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: print("New tab clicked"),
+            relief="flat",
+            text="New",
+            fg="#A0A0A0",  # Grey text (unselected)
+            bg="#FFFFFF",
+            font=("Inter", 16 * -1)
+        )
+        self.button_tab_new.place(x=140, y=30, width=80, height=40) # Adjust
+
+        # --- "Seen" Tab Button (Unselected) ---
+        self.button_tab_seen = Button(
+            self.main_canvas,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: print("Seen tab clicked"),
+            relief="flat",
+            text="Seen",
+            fg="#A0A0A0",
+            bg="#FFFFFF",
+            font=("Inter", 16 * -1)
+        )
+        self.button_tab_seen.place(x=230, y=30, width=80, height=40) # Adjust
+
+        # --- Search Bar Entry ---
+        self.entry_search = Entry(
+            self.main_canvas,
+            bd=1,
+            bg="#FFFFFF",
+            fg="grey", # Placeholder color
+            highlightthickness=1,
+            highlightcolor="#A0A0A0",
+            highlightbackground="#A0A0A0",
+            relief="flat",
+            font=("Inter", 14)
+        )
+        self.entry_search.place(
+            x=50.0, y=100.0, # Adjust coordinates
+            width=300.0,
+            height=40.0
+        )
+        self.entry_search.insert(0, "Enter your destination")
+
+        # Placeholder text logic
+        def on_focus_in(event):
+            if self.entry_search.cget('fg') == 'grey':
+                self.entry_search.delete(0, 'end')
+                self.entry_search.config(fg='black')
+
+        def on_focus_out(event):
+            if not self.entry_search.get():
+                self.entry_search.insert(0, "Enter your destination")
+                self.entry_search.config(fg='grey')
+
+        self.entry_search.bind("<FocusIn>", on_focus_in)
+        self.entry_search.bind("<FocusOut>", on_focus_out)
+
+        # --- "Search Content" Button ---
+        self.button_search = Button(
+            self.main_canvas,
+            borderwidth=1,
+            highlightthickness=1,
+            highlightbackground="#4CAF50", # Green border
+            command=lambda: print("Search clicked"),
+            relief="solid", # Use 'solid' for a visible border
+            text="Search Content",
+            fg="#4CAF50",  # Green text
+            bg="#FFFFFF",  # White background
+            font=("Inter", 14)
+        )
+        self.button_search.place(x=370, y=100, width=150, height=42) # Adjust
+
+        # --- "Clear Storage" Button ---
+        self.button_clear = Button(
+            self.main_canvas,
+            borderwidth=1,
+            highlightthickness=1,
+            highlightbackground="#A0A0A0", # Grey border
+            command=lambda: print("Clear clicked"),
+            relief="solid",
+            text="Clear Storage",
+            fg="#A0A0A0",  # Grey text
+            bg="#FFFFFF",
+            font=("Inter", 14)
+        )
+        self.button_clear.place(x=980, y=100, width=150, height=42) # Adjust
+
+        # --- "Your Videos" Text (Header) ---
+        self.main_canvas.create_text(
+            50.0, 180.0, # Adjust coordinates
+            anchor="nw",
+            text="Your Videos",
+            fill="#212121", # Black text
+            font=("Inter", 18 * -1)
+        )
+
+        # --- Large Content Area (Placeholder) ---
+        # Using a Text widget as a placeholder
+        self.content_area = Text(
+            self.main_canvas,
+            bd=1,
+            bg="#F5F5F5", # Light grey background
+            fg="#000716",
+            highlightthickness=1,
+            highlightcolor="#E0E0E0", # Light grey border
+            highlightbackground="#E0E0E0",
+            relief="flat",
+            font=("Inter", 14)
+        )
+        self.content_area.place(
+            x=50.0, y=220.0, # Adjust
+            width=1080.0, # Adjust
+            height=650.0  # Adjust
+        )
+        self.content_area.insert("1.0", "This is where your video content would be listed...")
+        self.content_area.config(state="disabled") # Make it read-only
+
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    root.title("App Name") # Window title
+    app = App(root)
+    root.resizable(False, False) # Prevent resizing
+    root.mainloop()
