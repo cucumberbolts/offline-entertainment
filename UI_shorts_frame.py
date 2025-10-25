@@ -5,7 +5,7 @@ class App:
     def __init__(self, root):
         self.root = root
         # Set window dimensions to match the Figma frame
-        self.root.geometry("1440x900") 
+        self.root.geometry("1440x800") 
         self.root.configure(bg="#FFFFFF") # Main background is white
         
         # --- Sidebar (Dark) ---
@@ -24,7 +24,7 @@ class App:
         self.sidebar_canvas.create_text(
             30.0, 30.0, # Adjust coordinates
             anchor="nw",
-            text="App Name",
+            text="Scravel",
             fill="#FFFFFF", # White text
             font=("Inter", 24 * -1) # Adjust font and size
         )
@@ -37,8 +37,8 @@ class App:
             command=lambda: print("Home button clicked"),
             relief="flat",
             text="Home",
-            fg="#212121",  # Black text
-            bg="#FFFFFF",  # White background (selected)
+            fg="#A0A0A0",  # Black text
+            bg="#212121",  # White background (selected)
             font=("Inter", 16 * -1),
             anchor="w",
             padx=30
@@ -111,7 +111,24 @@ class App:
             padx=30
         )
         self.button_books.place(x=0, y=330, width=260, height=50) # Adjust
-        
+
+        # --- "Travel" Button (Unselected) ---
+        self.button_books = Button(
+            self.sidebar_canvas,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: print("Travel button clicked"),
+            relief="flat",
+            text="🗺️ Travel",
+            fg="#FFFFFF",
+            bg="#212121",
+            activebackground="#333333",
+            activeforeground="#FFFFFF",
+            font=("Inter", 16 * -1),
+            anchor="w",
+            padx=30
+        )
+        self.button_books.place(x=0, y=380, width=260, height=50) # Adjust
         
         # --- Main Content Area (White) ---
         # This canvas will hold the static elements of the main area
