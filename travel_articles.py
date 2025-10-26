@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 #Travel articles
+=======
+>>>>>>> Diana1415-main
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
@@ -65,6 +68,20 @@ def _is_article_html(html: str) -> bool:
                     return True
     return False
 
+<<<<<<< HEAD
+=======
+def fetch_articles(search_term: str) -> str:
+    """
+    Scrapes BBC Travel for articles, filters by search_term, and returns results as a string.
+    """
+    try:
+        homepage = "https://www.bbc.com/travel"
+        r = requests.get(homepage, headers=HEADERS, timeout=15)
+        r.raise_for_status()
+        soup = BeautifulSoup(r.text, "html.parser")
+    except requests.RequestException as e:
+        return f"Error: Could not connect to BBC Travel. {e}"
+>>>>>>> Diana1415-main
 if __name__ == "__main__":
     homepage = "https://www.bbc.com/travel"
     r = requests.get(homepage, headers=HEADERS, timeout=15)
@@ -84,6 +101,61 @@ if __name__ == "__main__":
             continue
         seen.add(full)
         pagelinks.append(full)
+<<<<<<< HEAD
+=======
+        if len(pagelinks) >= 30: # Limit to 30 links to keep it fast
+            break
+
+    results = []
+    search_term_lower = search_term.lower()
+
+    for link in pagelinks:
+        try:
+            # fetch the candidate page
+            r2 = requests.get(link, headers=HEADERS, timeout=12)
+            r2.raise_for_status()
+        except requests.RequestException:
+            continue # Skip this link if it fails
+
+        if not _is_article_html(r2.text):
+            continue # Skip if it's not an article
+
+        text = get_article_text(link)
+        if not text or len(text) < 300:
+            continue # Skip if text is too short
+        
+        str_link = str(link)
+        
+        # Filter: check for negative keywords
+        if "cultural-experiences" in str_link or "worlds-table" in str_link or "/destinations/" in str_link:
+            continue
+            
+        # Filter: check for positive search term
+        # If search_term is blank, match all (as per original script)
+        is_match = False
+        if not search_term_lower:
+            is_match = True
+        elif search_term_lower in text.lower():
+            is_match = True
+
+        if is_match:
+            result_string = f"URL: {link}\nLength: {len(text)}\n\n{text[:1000]}...\n\n"
+            result_string += ("=" * 80 + "\n\n")
+            results.append(result_string)
+
+    if not results:
+        return f"No articles found matching '{search_term}'."
+
+    return "".join(results)
+
+
+if __name__ == "__main__":
+    # This block now just tests the function
+    term = input("Enter search terms (comma-separated) or leave blank to get all articles: ")
+    print("--- Scraping... ---")
+    articles_text = fetch_articles(term)
+    print(articles_text)
+>>>>>>> Diana1415-main
         if len(pagelinks) >= 30:
             break
 
@@ -114,4 +186,8 @@ if __name__ == "__main__":
                 print("Length:", len(text))
                 print(text[:1000])
                 print("\n" + "=" * 80 + "\n")
+<<<<<<< HEAD
                 break
+=======
+                break
+>>>>>>> Diana1415-main

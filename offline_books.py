@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 #!/usr/bin/env python3
+=======
+>>>>>>> Diana1415-main
 """
 gutenberg_novels.py
 Search and download public-domain novels from Project Gutenberg via Gutendex.
@@ -243,8 +246,16 @@ def main():
        print(text[:10000])
 
 
+<<<<<<< HEAD
 
 
+=======
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> db090b3 (Rename project)
+>>>>>>> Diana1415-main
 def get_epub_text(epub_path):
     if not epub_path:
         return ""
@@ -272,5 +283,62 @@ def get_epub_text(epub_path):
             continue
     return "\n".join(text_content)
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+# --- NEW FUNCTION FOR UI ---
+
+def get_all_downloaded_books_text() -> str:
+    """
+    Scans the default download directory for index.json,
+    reads all downloaded books (epub or txt), and returns
+    their combined text.
+    """
+    # This path is based on the default in your main() function
+    default_dir = Path.home() / "gutenberg_books"
+    index_path = default_dir / "index.json"
+
+    if not index_path.exists():
+        return (f"Error: index.json not found.\n\n"
+                f"Please run this script from your terminal first to download books:\n"
+                f"python {__file__} --query \"some query\"")
+
+    try:
+        with open(index_path, "r", encoding="utf-8") as f:
+            metas = json.load(f)
+    except Exception as e:
+        return f"Error reading {index_path}: {e}"
+
+    if not metas:
+        return "No books found in index.json. Please run the download script."
+
+    all_books_text = []
+    for i, meta in enumerate(metas):
+        title = meta.get("title", "Unknown Title")
+        # Ensure authors is a list before joining
+        authors_list = meta.get("authors", ["Unknown Author"])
+        if not isinstance(authors_list, list):
+            authors_list = ["Unknown Author"]
+        authors = ", ".join(authors_list)
+        
+        epub_file = meta.get("downloaded_file")
+
+        header = f"--- BOOK {i+1}: {title} by {authors} ---\n\n"
+        all_books_text.append(header)
+
+        if not epub_file:
+            text = "[Book file not found in metadata]\n\n"
+        else:
+            text = get_epub_text(epub_file)
+            if not text:
+                text = f"[Could not read or parse book file: {epub_file}]\n\n"
+        
+        all_books_text.append(text)
+        all_books_text.append("\n" + ("=" * 80) + "\n\n")
+
+    return "".join(all_books_text)
+
+# --- END OF NEW FUNCTION ---
+>>>>>>> Diana1415-main
 if __name__ == "__main__":
     main()
