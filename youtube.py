@@ -10,6 +10,7 @@ import itertools
 
 
 instance = "inv.perditum.com"
+# instance = "invidious.reallyaweso.me"
 
 
 def get_search_results(search: str, num: int):
@@ -41,8 +42,6 @@ def save_thumbnail(id: str, dir: str):
     x = json.loads(response.text)
 
 
-video_dir = "videos/"
-
 
 def save_video(id: str, dir: str):
     """ Save the video from the given the video id to a file """
@@ -69,14 +68,14 @@ def save_video(id: str, dir: str):
     return path
 
 
-def download_func(n, id, video_dir):
+def download_func(n: str, id: str, video_dir: str):
     print(f"Downloading video {n + 1}...")
     filename = save_video(id, video_dir)
     print(f"Finished downloading video {n + 1}.")
     return filename
 
 
-def download_videos(search: str, num_videos: str):
+def download_videos(search: str, num_videos: str, video_dir: str):
     """ Download multiple videos at once """
 
     print(f"Getting the first {num_videos} search results...")
@@ -96,9 +95,12 @@ def download_videos(search: str, num_videos: str):
 def main():
     """ Main function """
 
+    video_dir = "videos/"
+
     search = input("Enter your search: ")
     num_videos = int(input("Enter number of videos: "))
-    print(download_videos(search, num_videos))
+
+    print(download_videos(search, num_videos, video_dir))
 
 
 if __name__ == "__main__":
