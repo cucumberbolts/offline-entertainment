@@ -96,9 +96,9 @@ class App:
             self.shorts.append(youtube.download_videos(search, 15, SHORTS_PATH))
 
     def disp_video(self, idx):
+        self.shortidx = idx
         video_path = self.shorts[self.shortidx]
         audio_path = f"cache/{os.path.splitext(os.path.basename(video_path))[0]}.wav"
-        self.shortidx = idx
         try:
             extract_audio(video_path, audio_path)
         except:

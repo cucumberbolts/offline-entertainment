@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-#Travel articles
-=======
->>>>>>> Diana1415-main
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
@@ -68,8 +64,6 @@ def _is_article_html(html: str) -> bool:
                     return True
     return False
 
-<<<<<<< HEAD
-=======
 def fetch_articles(search_term: str) -> str:
     """
     Scrapes BBC Travel for articles, filters by search_term, and returns results as a string.
@@ -81,8 +75,6 @@ def fetch_articles(search_term: str) -> str:
         soup = BeautifulSoup(r.text, "html.parser")
     except requests.RequestException as e:
         return f"Error: Could not connect to BBC Travel. {e}"
->>>>>>> Diana1415-main
-if __name__ == "__main__":
     homepage = "https://www.bbc.com/travel"
     r = requests.get(homepage, headers=HEADERS, timeout=15)
     r.raise_for_status()
@@ -101,8 +93,6 @@ if __name__ == "__main__":
             continue
         seen.add(full)
         pagelinks.append(full)
-<<<<<<< HEAD
-=======
         if len(pagelinks) >= 30: # Limit to 30 links to keep it fast
             break
 
@@ -155,9 +145,6 @@ if __name__ == "__main__":
     print("--- Scraping... ---")
     articles_text = fetch_articles(term)
     print(articles_text)
->>>>>>> Diana1415-main
-        if len(pagelinks) >= 30:
-            break
 
     search_terms = []
     add = input("Enter search terms (comma-separated) or leave blank to get all articles: ")
@@ -186,8 +173,4 @@ if __name__ == "__main__":
                 print("Length:", len(text))
                 print(text[:1000])
                 print("\n" + "=" * 80 + "\n")
-<<<<<<< HEAD
                 break
-=======
-                break
->>>>>>> Diana1415-main

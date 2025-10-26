@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-#!/usr/bin/env python3
-=======
->>>>>>> Diana1415-main
 """
 gutenberg_novels.py
 Search and download public-domain novels from Project Gutenberg via Gutendex.
@@ -245,17 +241,6 @@ def main():
        text = get_epub_text(epub_file)
        print(text[:10000])
 
-
-<<<<<<< HEAD
-
-
-=======
-<<<<<<< HEAD
-=======
-
-
->>>>>>> db090b3 (Rename project)
->>>>>>> Diana1415-main
 def get_epub_text(epub_path):
     if not epub_path:
         return ""
@@ -283,9 +268,6 @@ def get_epub_text(epub_path):
             continue
     return "\n".join(text_content)
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 # --- NEW FUNCTION FOR UI ---
 
 def get_all_downloaded_books_text() -> str:
@@ -338,7 +320,5 @@ def get_all_downloaded_books_text() -> str:
 
     return "".join(all_books_text)
 
-# --- END OF NEW FUNCTION ---
->>>>>>> Diana1415-main
 if __name__ == "__main__":
     main()
