@@ -66,18 +66,18 @@ def save_video(id: str, dir: str):
     with open(path, "wb") as writer:
         writer.write(data)
 
+    return path
+
 
 def download_func(n, id, video_dir):
     print(f"Downloading video {n + 1}...")
-    save_video(id, video_dir)
+    filename = save_video(id, video_dir)
     print(f"Finished downloading video {n + 1}.")
+    return filename
 
 
-def main():
-    """ Main function """
-
-    search = input("Enter your search: ")
-    num_videos = int(input("Enter number of videos: "))
+def download_videos(search: str, num_videos: str):
+    """ Download multiple videos at once """
 
     print(f"Getting the first {num_videos} search results...")
     ids = get_search_results(search, num_videos)
@@ -87,9 +87,18 @@ def main():
         os.mkdir(video_dir)
 
     with ThreadPoolExecutor(max_workers=10) as executor:
-        executor.map(download_func, range(len(ids)), ids, itertools.repeat(video_dir))
+        filenames = list(executor.map(download_func, range(len(ids)), ids, itertools.repeat(video_dir)))
 
     print("Finished downloading!")
+    return filenames
+
+
+def main():
+    """ Main function """
+
+    search = input("Enter your search: ")
+    num_videos = int(input("Enter number of videos: "))
+    print(download_videos(search, num_videos))
 
 
 if __name__ == "__main__":
